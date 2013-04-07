@@ -1,0 +1,19 @@
+cd ./bin
+rm -rf *
+nasm -f aout ../src/libasm.asm -o libasm.o
+nasm -f aout ../src/kstart.asm -o kstart.o
+nasm -f aout ../src/loader.asm -o kstart.o
+gcc -c ../src/kernel.c -o kernel.o -fno-builtin -Wall
+gcc -c ../src/libc.c  -o libc.o -fno-builtin -Wall
+gcc -c ../src/libstd.c -o libstd.o -fno-builtin -Wall -fno-stack-protector
+gcc -c ../src/shell.c -o shell.o -fno-builtin -Wall -fno-stack-protector
+gcc -c ../src/circularBuffer.c -o circularBuffer.o -fno-builtin -Wall
+gcc -c ../src/speaker.c -o speaker.o -fno-builtin -Wall
+gcc -c ../src/colormgmt.c -o colormgmt.o -fno-builtin -Wall -fno-stack-protector
+gcc -c ../src/string.c -o string.o -fno-builtin -Wall
+gcc -c ../src/mempages.c -o mempages.o -fno-builtin -Wall
+gcc -c ../src/sched.c -o sched.o -fno-builtin -Wall
+gcc -c ../src/QueueADT.c -o QueueADT.o -fno-builtin -Wall
+gcc -c ../src/ListADT.c -o ListADT.o -fno-builtin -Wall
+gcc -c ../src/filesystem.c -o filesystem.o -fno-builtin -Wall -fno-stack-protector
+ld -T ../src/link.ld -o kernel.bin kstart.o kernel.o  libc.o libasm.o libstd.o shell.o circularBuffer.o speaker.o colormgmt.o string.o mempages.o sched.o QueueADT.o ListADT.o filesystem.o
